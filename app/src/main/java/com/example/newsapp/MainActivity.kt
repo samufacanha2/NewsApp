@@ -1,6 +1,5 @@
 package com.example.newsapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,9 +14,36 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val news = news("title1", "body1", R.drawable.ic_launcher_foreground)
-        posts.add(news)
-        var t = findViewById<TextView>(R.id.p1_Title)
+        for (i in 0..5) {
+            posts.add(news("Title $i", "Body $i", R.drawable.ic_launcher_foreground))
+        }
+        val t = findViewById<TextView>(R.id.postTitle)
+        val b = findViewById<TextView>(R.id.postBody)
         t.text = posts[0].title
+        b.text = posts[0].body
+    }
+
+    fun nextPost (view: View) {
+        curNews++
+        if (curNews >= posts.size) {
+            curNews = 0
+        }
+        var t = findViewById<TextView>(R.id.postTitle)
+        t.text = posts[curNews].title
+
+        t = findViewById<TextView>(R.id.postBody)
+        t.text = posts[curNews].body
+    }
+
+    fun prevPost (view: View) {
+        curNews--
+        if (curNews < 0) {
+            curNews = posts.size - 1
+        }
+        var t = findViewById<TextView>(R.id.postTitle)
+        t.text = posts[curNews].title
+
+        t = findViewById<TextView>(R.id.postBody)
+        t.text = posts[curNews].body
     }
 }
